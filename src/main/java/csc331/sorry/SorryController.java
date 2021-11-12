@@ -18,6 +18,9 @@ public class SorryController {
     @FXML
     private Label turnLabel;
 
+    @FXML
+    private Label instructionsLabel;
+
     private boolean canDraw = true; // Temporary - set to true on initialization but false once a card is drawn
 
     @FXML
