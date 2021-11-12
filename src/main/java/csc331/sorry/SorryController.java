@@ -44,9 +44,37 @@ public class SorryController {
                     labelText = "Click a pawn to move forward three spaces.";
                     break;
                 case 4:
-                    labelText = "";
+                    labelText = "Click a pawn to move back four spaces";
+                    break;
+                case 5:
+                    labelText = "Click a pawn to move forward five spaces";
+                    break;
+                case 6:
+                    labelText = "Click a pawn to move back three space";
+                    break;
+                case 7:
+                    labelText = "Click a pawn to move 1-7 spaces forward";
+                    break;
+                case 8:
+                    labelText = "Click a pawn to move eight spaces forward";
+                    break;
+                case 9:
+                    labelText = "Click a pawn to move five spaces back";
+                    break;
+                case 10:
+                    labelText = "Click a pawn to move ten spaces forward";
+                    break;
+                case 11:
+                    labelText = "Click a pawn to move ten spaces backwards";
+                    break;
+                case 12:
+                    labelText = "Click a pawn to move twelve spaces forward";
+                    break;
+                case 13:
+                    labelText = "Click pawn from start to opponent pawn space";
                     break;
             }
+            instructionsLabel.setText(labelText);
         }
     }
 
