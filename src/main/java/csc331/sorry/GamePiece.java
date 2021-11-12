@@ -18,6 +18,10 @@ public class GamePiece {
         return inHome;
     }
 
+    public void setSpace(int space) { this.space = space; }
+
+    public void setInHome(boolean inHome) { this.inHome = inHome; }
+
 }
 
 enum Color {
