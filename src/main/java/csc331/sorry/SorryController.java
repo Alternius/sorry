@@ -28,6 +28,22 @@ public class SorryController {
             int card = (int) (Math.random() * 13 + 1);
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/" +
                     (card == 13 ? "Sorry" : card) + ".png"))));
+
+            String labelText = "";
+            switch (card) {
+                case 1:
+                    labelText = "Click a pawn to move forward one space.";
+                    break;
+                case 2:
+                    labelText = "Click a pawn to move forward two spaces.";
+                    break;
+                case 3:
+                    labelText = "Click a pawn to move forward three spaces.";
+                    break;
+                case 4:
+                    labelText = "";
+                    break;
+            }
         }
     }
 
