@@ -54,7 +54,17 @@
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
          </padding>
          <children>
-            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="15" GridPane.valignment="CENTER">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="15" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@pieces/Green.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="12">
+               <image>
+                  <Image url="@pieces/Green.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="13">
                <image>
                   <Image url="@pieces/Green.png" />
                </image>
@@ -68,9 +78,9 @@
                   <Font size="48.0" />
                </font>
             </Label>
-            <Label text="Draw a card">
+            <Label fx:id="instructionsLabel" text="Draw a card">
                <font>
-                  <Font size="36.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
             <ImageView fx:id="cardImage" fitHeight="300.0" fitWidth="400.0" onMouseClicked="#onCardClicked" pickOnBounds="true" preserveRatio="true">
