@@ -102,7 +102,8 @@ public class SorryController {
 
     @FXML
     void onPieceClick(MouseEvent event) {
-
+        GridPane.setRowIndex(greenPiece1,0);
+        GridPane.setColumnIndex(greenPiece1, 3);
     }
 
     public void initialize() {
