@@ -19,6 +19,9 @@ public class SorryController {
     private Label turnLabel;
 
     @FXML
+    private ImageView piece;
+
+    @FXML
     private Label instructionsLabel;
 
     private boolean canDraw = true; // Temporary - set to true on initialization but false once a card is drawn
@@ -80,7 +83,7 @@ public class SorryController {
 
     @FXML
     void onPieceClick(MouseEvent event) {
-        
+
     }
 
     public void initialize() {
