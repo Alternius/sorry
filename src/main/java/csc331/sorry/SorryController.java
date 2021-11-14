@@ -78,6 +78,11 @@ public class SorryController {
         }
     }
 
+    @FXML
+    void onPieceClick(MouseEvent event) {
+        
+    }
+
     public void initialize() {
         gridPane.setBackground(new Background(
                 new BackgroundImage(new Image(String.valueOf(getClass().getResource("Board.png"))),
