@@ -19,7 +19,52 @@ public class SorryController {
     private Label turnLabel;
 
     @FXML
-    private ImageView piece;
+    private ImageView bluePiece1;
+
+    @FXML
+    private ImageView bluePiece2;
+
+    @FXML
+    private ImageView bluePiece3;
+
+    @FXML
+    private ImageView bluePiece4;
+
+    @FXML
+    private ImageView greenPiece1;
+
+    @FXML
+    private ImageView greenPiece2;
+
+    @FXML
+    private ImageView greenPiece3;
+
+    @FXML
+    private ImageView greenPiece4;
+
+    @FXML
+    private ImageView redPiece1;
+
+    @FXML
+    private ImageView redPiece2;
+
+    @FXML
+    private ImageView redPiece3;
+
+    @FXML
+    private ImageView redPiece4;
+
+    @FXML
+    private ImageView yellowPiece1;
+
+    @FXML
+    private ImageView yellowPiece2;
+
+    @FXML
+    private ImageView yellowPiece3;
+
+    @FXML
+    private ImageView yellowPiece4;
 
     @FXML
     private Label instructionsLabel;
@@ -35,48 +80,22 @@ public class SorryController {
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/" +
                     (card == 13 ? "Sorry" : card) + ".png"))));
 
-            String labelText = "";
-            switch (card) {
-                case 1:
-                    labelText = "Click a pawn to move forward one space.";
-                    break;
-                case 2:
-                    labelText = "Click a pawn to move forward two spaces.";
-                    break;
-                case 3:
-                    labelText = "Click a pawn to move forward three spaces.";
-                    break;
-                case 4:
-                    labelText = "Click a pawn to move back four spaces";
-                    break;
-                case 5:
-                    labelText = "Click a pawn to move forward five spaces";
-                    break;
-                case 6:
-                    labelText = "Click a pawn to move back three space";
-                    break;
-                case 7:
-                    labelText = "Click a pawn to move 1-7 spaces forward";
-                    break;
-                case 8:
-                    labelText = "Click a pawn to move eight spaces forward";
-                    break;
-                case 9:
-                    labelText = "Click a pawn to move five spaces back";
-                    break;
-                case 10:
-                    labelText = "Click a pawn to move ten spaces forward";
-                    break;
-                case 11:
-                    labelText = "Click a pawn to move ten spaces backwards";
-                    break;
-                case 12:
-                    labelText = "Click a pawn to move twelve spaces forward";
-                    break;
-                case 13:
-                    labelText = "Click pawn from start to opponent pawn space";
-                    break;
-            }
+            String labelText = switch (card) {
+                case 1 -> "Click a pawn to move forward one space.";
+                case 2 -> "Click a pawn to move forward two spaces.";
+                case 3 -> "Click a pawn to move forward three spaces.";
+                case 4 -> "Click a pawn to move back four spaces";
+                case 5 -> "Click a pawn to move forward five spaces";
+                case 6 -> "Click a pawn to move back three space";
+                case 7 -> "Click a pawn to move 1-7 spaces forward";
+                case 8 -> "Click a pawn to move eight spaces forward";
+                case 9 -> "Click a pawn to move five spaces back";
+                case 10 -> "Click a pawn to move ten spaces forward";
+                case 11 -> "Click a pawn to move ten spaces backwards";
+                case 12 -> "Click a pawn to move twelve spaces forward";
+                case 13 -> "Click pawn from start to opponent pawn space";
+                default -> "";
+            };
             instructionsLabel.setText(labelText);
         }
     }

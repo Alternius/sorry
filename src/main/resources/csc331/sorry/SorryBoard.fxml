@@ -54,82 +54,82 @@
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
          </padding>
          <children>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="13" GridPane.valignment="CENTER">
+            <ImageView fx:id="greenPiece4" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="13" GridPane.valignment="CENTER">
                <image>
                   <Image url="@pieces/Green.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="12">
+            <ImageView fx:id="greenPiece3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="12">
                <image>
                   <Image url="@pieces/Green.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.rowIndex="12">
+            <ImageView fx:id="greenPiece2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.rowIndex="12">
                <image>
                   <Image url="@pieces/Green.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <ImageView fx:id="bluePiece2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <image>
                   <Image url="@pieces/Blue.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+            <ImageView fx:id="bluePiece1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
                <image>
                   <Image url="@pieces/Blue.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            <ImageView fx:id="bluePiece3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <image>
                   <Image url="@pieces/Blue.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
+            <ImageView fx:id="bluePiece4" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
                <image>
                   <Image url="@pieces/Blue.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="10">
+            <ImageView fx:id="redPiece1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="10">
                <image>
                   <Image url="@pieces/Red.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="10" GridPane.rowIndex="12">
+            <ImageView fx:id="greenPiece1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="10" GridPane.rowIndex="12">
                <image>
                   <Image url="@pieces/Green.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="11">
+            <ImageView fx:id="redPiece3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="11">
                <image>
                   <Image url="@pieces/Red.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="11">
+            <ImageView fx:id="redPiece4" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="11">
                <image>
                   <Image url="@pieces/Red.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="10">
+            <ImageView fx:id="redPiece2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="10">
                <image>
                   <Image url="@pieces/Red.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="4">
+            <ImageView fx:id="yellowPiece3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="4">
                <image>
                   <Image url="@pieces/Yellow.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="5">
+            <ImageView fx:id="yellowPiece4" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="5">
                <image>
                   <Image url="@pieces/Yellow.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="4">
+            <ImageView fx:id="yellowPiece2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="4">
                <image>
                   <Image url="@pieces/Yellow.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="3">
+            <ImageView fx:id="yellowPiece1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#onPieceClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="3">
                <image>
                   <Image url="@pieces/Yellow.png" />
                </image>
