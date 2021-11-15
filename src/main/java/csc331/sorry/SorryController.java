@@ -76,6 +76,12 @@ public class SorryController {
 
     private int card;
 
+    private String[] labelTurn = {"Blue Turn", "Green Turn", "Red Turn", "Yellow Turn"};
+
+    private String[] idTurn = {"blue", "green", "red", "yellow"};
+
+    private int counter = 0;
+
     @FXML
     void onCardClicked(MouseEvent event) {
         card = (int) (Math.random() * 13 + 1);
@@ -111,7 +117,7 @@ public class SorryController {
         ImageView pieceClicked = (ImageView) event.getSource();
         String id = pieceClicked.getId();
         String currentTurn = turnLabel.getText();
-        if (currentTurn.equals("Blue Turn") && id.startsWith("blue")) {
+        if (currentTurn.equals(labelTurn[counter]) && id.startsWith(idTurn[counter])) {
             if (card == 1){
                 GridPane.setColumnIndex(pieceClicked, 4);
                 GridPane.setRowIndex(pieceClicked, 0);
@@ -171,65 +177,10 @@ public class SorryController {
             }
             //if (card == 13){
 
-            //}
-            turnLabel.setText("Green Turn");
+            //
             canDraw = true;
-
-        }
-
-        if (currentTurn.equals("Green Turn") && id.startsWith("green")){
-            if (card == 1){
-                GridPane.setColumnIndex(pieceClicked, 4);
-                GridPane.setRowIndex(pieceClicked, 0);
-            }
-            if (card == 2){
-                GridPane.setColumnIndex(pieceClicked, 5);
-                GridPane.setRowIndex(pieceClicked, 0);
-            }
-            if (card == 3){
-                GridPane.setColumnIndex(pieceClicked, 6);
-                GridPane.setRowIndex(pieceClicked, 0);
-            }
-            if (card == 4){
-                GridPane.setColumnIndex(pieceClicked, 1);
-                GridPane.setRowIndex(pieceClicked, 0);
-            }
-            if (card == 5){
-                GridPane.setColumnIndex(pieceClicked, 8);
-                GridPane.setRowIndex(pieceClicked,0);
-            }
-            if (card == 6){
-                GridPane.setColumnIndex(pieceClicked,2);
-                GridPane.setRowIndex(pieceClicked,0);
-            }
-            //if (card == 7){
-
-            //}
-            if (card == 8){
-                GridPane.setColumnIndex(pieceClicked,11);
-                GridPane.setRowIndex(pieceClicked,0);
-            }
-            if (card == 9){
-                GridPane.setColumnIndex(pieceClicked,0);
-                GridPane.setRowIndex(pieceClicked,0);
-            }
-            if (card == 10){
-                GridPane.setColumnIndex(pieceClicked,13);
-                GridPane.setRowIndex(pieceClicked,0);
-            }
-            if (card == 11){
-                GridPane.setColumnIndex(pieceClicked,0);
-                GridPane.setRowIndex(pieceClicked,5);
-            }
-            if (card == 12){
-                GridPane.setColumnIndex(pieceClicked,15);
-                GridPane.setRowIndex(pieceClicked,0);
-            }
-            //if (card == 13){
-
-            //}
-            turnLabel.setText("Red Turn");
-
+            counter = (counter + 1) % 4;
+            turnLabel.setText(labelTurn[counter]);
         }
     }
 
