@@ -138,7 +138,7 @@
       </GridPane>
       <VBox alignment="TOP_CENTER" prefWidth="400.0">
          <children>
-            <Label fx:id="turnLabel" text="Blue's Turn">
+            <Label fx:id="turnLabel" text="Blue Turn">
                <font>
                   <Font size="48.0" />
                </font>

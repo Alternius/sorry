@@ -1,11 +1,14 @@
 package csc331.sorry;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
+
+import static javafx.scene.layout.GridPane.setColumnIndex;
 
 public class SorryController {
 
@@ -71,12 +74,13 @@ public class SorryController {
 
     private boolean canDraw = true; // Temporary - set to true on initialization but false once a card is drawn
 
+    int card = (int) (Math.random() * 13 + 1);
+
     @FXML
     void onCardClicked(MouseEvent event) {
         // Pick random card from 1 to 13; 1-12 are numbers, 13 is the Sorry card
         if (canDraw) {
             canDraw = false;
-            int card = (int) (Math.random() * 13 + 1);
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/" +
                     (card == 13 ? "Sorry" : card) + ".png"))));
 
@@ -102,8 +106,62 @@ public class SorryController {
 
     @FXML
     void onPieceClick(MouseEvent event) {
-        GridPane.setRowIndex(greenPiece1,0);
-        GridPane.setColumnIndex(greenPiece1, 3);
+        ImageView pieceClicked = (ImageView) event.getSource();
+        String id = pieceClicked.getId();
+        String currentTurn = turnLabel.getText();
+        if (currentTurn.equals("Blue Turn") && id.startsWith("blue")) {
+            if (card == 1){
+                GridPane.setColumnIndex(pieceClicked, 4);
+                GridPane.setRowIndex(pieceClicked, 0);
+            }
+            if (card == 2){
+                GridPane.setColumnIndex(pieceClicked, 5);
+                GridPane.setRowIndex(pieceClicked, 0);
+            }
+            if (card == 3){
+                GridPane.setColumnIndex(pieceClicked, 6);
+                GridPane.setRowIndex(pieceClicked, 0);
+            }
+            if (card == 4){
+                GridPane.setColumnIndex(pieceClicked, 1);
+                GridPane.setRowIndex(pieceClicked, 0);
+            }
+            if (card == 5){
+                GridPane.setColumnIndex(pieceClicked, 8);
+                GridPane.setRowIndex(pieceClicked,0);
+            }
+            if (card == 6){
+                GridPane.setColumnIndex(pieceClicked,2);
+                GridPane.setRowIndex(pieceClicked,0);
+            }
+            //if (card == 7){
+
+            //}
+            if (card == 8){
+                GridPane.setColumnIndex(pieceClicked,11);
+                GridPane.setRowIndex(pieceClicked,0);
+            }
+            if (card == 9){
+                GridPane.setColumnIndex(pieceClicked,0);
+                GridPane.setRowIndex(pieceClicked,0);
+            }
+            if (card == 10){
+                GridPane.setColumnIndex(pieceClicked,13);
+                GridPane.setRowIndex(pieceClicked,0);
+            }
+            if (card == 11){
+                GridPane.setColumnIndex(pieceClicked,0);
+                GridPane.setRowIndex(pieceClicked,5);
+            }
+            if (card == 12){
+                GridPane.setColumnIndex(pieceClicked,15);
+                GridPane.setRowIndex(pieceClicked,0);
+            }
+            //if (card == 13){
+
+            //}
+            turnLabel.setText("Green Turn");
+        }
     }
 
     public void initialize() {
@@ -111,6 +169,9 @@ public class SorryController {
                 new BackgroundImage(new Image(String.valueOf(getClass().getResource("Board.png"))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
         )));
+
+
+
     }
 
 }
