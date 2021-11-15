@@ -74,10 +74,11 @@ public class SorryController {
 
     private boolean canDraw = true; // Temporary - set to true on initialization but false once a card is drawn
 
-    int card = (int) (Math.random() * 13 + 1);
+    private int card;
 
     @FXML
     void onCardClicked(MouseEvent event) {
+        card = (int) (Math.random() * 13 + 1);
         // Pick random card from 1 to 13; 1-12 are numbers, 13 is the Sorry card
         if (canDraw) {
             canDraw = false;
