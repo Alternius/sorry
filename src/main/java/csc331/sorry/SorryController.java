@@ -267,6 +267,7 @@ public class SorryController {
                     col = col + 1;
                 }
             }
+            return new int[]{row, col};
         }
         if (col == 15) {
             for (int i = 0; i < card; i++) {
@@ -276,6 +277,7 @@ public class SorryController {
                     row = row + 1;
                 }
             }
+            return new int[]{row, col};
         }
         if (row == 15) {
             for (int i = 0; i < card; i++) {
@@ -285,6 +287,7 @@ public class SorryController {
                     col = col - 1;
                 }
             }
+            return new int[]{row, col};
         }
         if (col == 0) {
             for (int i = 0; i < card; i++) {
@@ -294,7 +297,9 @@ public class SorryController {
                     row = row - 1;
                 }
             }
+            return new int[]{row, col};
         }
+        //Should probably add debug for invalid move
         return new int[]{row, col};
     }
     public void initialize() {
