@@ -137,7 +137,7 @@ public class SorryController {
                     GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
                     GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
                 } else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverForward(card, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -147,7 +147,7 @@ public class SorryController {
                     GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
                     GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
                 } else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverForward(card, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -157,7 +157,7 @@ public class SorryController {
                     GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
                     GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
                 }else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverForward(card, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -167,7 +167,7 @@ public class SorryController {
                     instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
                 }else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverBackward(card, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -177,7 +177,7 @@ public class SorryController {
                     instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
                 }else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverForward(card, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -188,7 +188,7 @@ public class SorryController {
                     instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
                 }else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverBackward(card - 3, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -201,7 +201,7 @@ public class SorryController {
                     instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
                 }else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverForward(card, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -211,7 +211,7 @@ public class SorryController {
                     instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
                 }else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverBackward(card - 4, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -221,7 +221,7 @@ public class SorryController {
                     instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
                 }else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverForward(card, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -231,7 +231,7 @@ public class SorryController {
                     instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
                 }else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverBackward(card - 1, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
@@ -241,13 +241,13 @@ public class SorryController {
                     instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
                 }else {
-                    int[] newPosition = pieceMover(card, row, col);
+                    int[] newPosition = pieceMoverForward(card, row, col);
                     GridPane.setRowIndex(pieceClicked, newPosition[0]);
                     GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
             }
             //if (card == 13){
-
+            //4; 6 -> 3; 9 -> 5; 11 -> 10
             //}
             canDraw = true;
             counter = (counter + 1) % 4;
@@ -258,7 +258,7 @@ public class SorryController {
 
     public void checkWin(){
     }
-    public int[] pieceMover(int card, int row, int col) {
+    public int[] pieceMoverForward(int card, int row, int col) {
         if (row == 0) {
             for (int i = 0; i < card; i++) {
                 if (col == 15) {
@@ -293,6 +293,50 @@ public class SorryController {
             for (int i = 0; i < card; i++) {
                 if (row == 0) {
                     col = col + 1;
+                } else {
+                    row = row - 1;
+                }
+            }
+            return new int[]{row, col};
+        }
+        //Should probably add debug for invalid move
+        return new int[]{row, col};
+    }
+    public int[] pieceMoverBackward(int card, int row, int col) {
+        if (row == 0) {
+            for (int i = 0; i < card; i++) {
+                if (col == 0) {
+                    row = row + 1;
+                } else {
+                    col = col - 1;
+                }
+            }
+            return new int[]{row, col};
+        }
+        if (col == 0) {
+            for (int i = 0; i < card; i++) {
+                if (row == 15) {
+                    col = col + 1;
+                } else {
+                    row = row + 1;
+                }
+            }
+            return new int[]{row, col};
+        }
+        if (row == 15) {
+            for (int i = 0; i < card; i++) {
+                if (col == 15) {
+                    row = row - 1;
+                } else {
+                    col = col + 1;
+                }
+            }
+            return new int[]{row, col};
+        }
+        if (col == 15) {
+            for (int i = 0; i < card; i++) {
+                if (row == 0) {
+                    col = col - 1;
                 } else {
                     row = row - 1;
                 }
