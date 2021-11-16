@@ -80,6 +80,18 @@ public class SorryController {
 
     private String[] idTurn = {"blue", "green", "red", "yellow"};
 
+    //The list below are the Row, Column coordinates of the start positions for each color, in the order above
+    private final int[] pawnStartRow = {1, 14, 11, 4 };
+    private final int[] pawnStartColumn = {4, 11, 1, 14};
+    /*
+    The list below are the Row, Column coordinates of each color, in the order above, AFTER moved from start position (when it begins counting)
+    These are the same coordinates for when a one initially moves a pawn from start
+     */
+    private final int[]pawnInitialRow = {0, 15, 11, 4};
+    private final int[] pawnInitialColumn = {4, 11, 0, 15};
+
+    //IMPORTANT NOTE: Since the position index orders line up with the turn orders, we can simply use the same counter to locate the position within list.
+
     private int counter = 0;
 
     @FXML
@@ -120,227 +132,118 @@ public class SorryController {
         int row = GridPane.getRowIndex(pieceClicked);
         int col = GridPane.getColumnIndex(pieceClicked);
         if (currentTurn.equals(labelTurn[counter]) && id.startsWith(idTurn[counter])) {
-            if (card == 1){
-                if (row == 1 && col == 4){ //blue
-                    GridPane.setColumnIndex(pieceClicked, col);
-                    GridPane.setRowIndex(pieceClicked, 0);
+            if (card == 1) {
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
+                    GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
+                } else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
-                if (row == 4 && col == 14){ //yellow
-                    GridPane.setColumnIndex(pieceClicked, col + 1);
-                    GridPane.setRowIndex(pieceClicked, row);
-                }
-                if (row == 11 && col == 1){ //red
-                    GridPane.setColumnIndex(pieceClicked, 0);
-                    GridPane.setRowIndex(pieceClicked, row);
-                }
-                if (row == 14 && col == 11){ //green
-                    GridPane.setColumnIndex(pieceClicked, col);
-                    GridPane.setRowIndex(pieceClicked, row + 1);
-                }
-                if (row == 0 && col != 15){
-                    GridPane.setColumnIndex(pieceClicked, col + 1);
-                }
-                if (row == 15 && col != 0){
-                    GridPane.setColumnIndex(pieceClicked, col - 1);
-                }
-                if (col == 0 && row != 0){
-                    GridPane.setRowIndex(pieceClicked, row - 1);
-                }
-                if (col == 15 && row != 15){
-                    GridPane.setRowIndex(pieceClicked, row + 1);
-                }
-
             }
-            if (card == 2){
-                if (row == 1 && col == 4){ //blue
-                    GridPane.setColumnIndex(pieceClicked, 5);
-                    GridPane.setRowIndex(pieceClicked, 0);
+            if (card == 2) {
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
+                    GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
+                } else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
-                if (row == 4 && col == 14){ //yellow
-                    GridPane.setColumnIndex(pieceClicked, 15);
-                    GridPane.setRowIndex(pieceClicked, 5);
-                }
-                if (row == 11 && col == 1){ //red
-                    GridPane.setColumnIndex(pieceClicked, 0);
-                    GridPane.setRowIndex(pieceClicked, 10);
-                }
-                if (row == 14 && col == 11){ //green
-                    GridPane.setColumnIndex(pieceClicked, 10);
-                    GridPane.setRowIndex(pieceClicked, 15);
-                }
-
             }
             if (card == 3){
-                if (row == 1 && col == 4){ //blue
-                    GridPane.setColumnIndex(pieceClicked,6);
-                    GridPane.setRowIndex(pieceClicked, 0);
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
+                    GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
+                }else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
-                if (row == 4 && col == 14){ //yellow
-                    GridPane.setColumnIndex(pieceClicked, 15);
-                    GridPane.setRowIndex(pieceClicked, 6);
-                }
-                if (row == 11 && col == 1){ //red
-                    GridPane.setColumnIndex(pieceClicked, 0);
-                    GridPane.setRowIndex(pieceClicked, 9);
-                }
-                if (row == 14 && col == 11){ //green
-                    GridPane.setColumnIndex(pieceClicked, 9);
-                    GridPane.setRowIndex(pieceClicked, 15);
-                }
-
             }
-            if (card == 4){
-                if (row == 1 && col == 4){ //blue
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+            if (card == 4) {
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
+                }else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
-                if (row == 4 && col == 14){ //yellow
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 11 && col == 1){ //red
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 14 && col == 11){ //green
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-
             }
             if (card == 5){
-                if (row == 1 && col == 4){ //blue
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 4 && col == 14){ //yellow
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 11 && col == 1){ //red
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 14 && col == 11){ //green
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
+                }else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
 
             }
             if (card == 6){
-                if (row == 1 && col == 4){ //blue
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
+                }else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
-                if (row == 4 && col == 14){ //yellow
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 11 && col == 1){ //red
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 14 && col == 11){ //green
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-
             }
             //if (card == 7){
 
             //}
             if (card == 8){
-                if (row == 1 && col == 4){ //blue
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
+                }else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
-                if (row == 4 && col == 14){ //yellow
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 11 && col == 1){ //red
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 14 && col == 11){ //green
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-
             }
             if (card == 9){
-                if (row == 1 && col == 4){ //blue
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
+                }else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
-                if (row == 4 && col == 14){ //yellow
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 11 && col == 1){ //red
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 14 && col == 11){ //green
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-
             }
             if (card == 10){
-                if (row == 1 && col == 4){ //blue
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
+                }else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
-                if (row == 4 && col == 14){ //yellow
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 11 && col == 1){ //red
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 14 && col == 11){ //green
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-
             }
             if (card == 11){
-                if (row == 1 && col == 4){ //blue
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
+                }else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
-                if (row == 4 && col == 14){ //yellow
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 11 && col == 1){ //red
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 14 && col == 11){ //green
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-
             }
             if (card == 12){
-                if (row == 1 && col == 4){ //blue
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 4 && col == 14){ //yellow
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 11 && col == 1){ //red
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
-                }
-                if (row == 14 && col == 11){ //green
-                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
-                    turnLabel.setText(labelTurn[counter]);
+                }else {
+                    int[] newPosition = pieceMover(card, row, col);
+                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
                 }
             }
             //if (card == 13){
@@ -355,7 +258,45 @@ public class SorryController {
 
     public void checkWin(){
     }
-
+    public int[] pieceMover(int card, int row, int col) {
+        if (row == 0) {
+            for (int i = 0; i < card; i++) {
+                if (col == 15) {
+                    row = row + 1;
+                } else {
+                    col = col + 1;
+                }
+            }
+        }
+        if (col == 15) {
+            for (int i = 0; i < card; i++) {
+                if (row == 15) {
+                    col = col - 1;
+                } else {
+                    row = row + 1;
+                }
+            }
+        }
+        if (row == 15) {
+            for (int i = 0; i < card; i++) {
+                if (col == 0) {
+                    row = row - 1;
+                } else {
+                    col = col - 1;
+                }
+            }
+        }
+        if (col == 0) {
+            for (int i = 0; i < card; i++) {
+                if (row == 0) {
+                    col = col + 1;
+                } else {
+                    row = row - 1;
+                }
+            }
+        }
+        return new int[]{row, col};
+    }
     public void initialize() {
         gridPane.setBackground(new Background(
                 new BackgroundImage(new Image(String.valueOf(getClass().getResource("Board.png"))),
