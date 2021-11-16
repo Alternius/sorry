@@ -117,71 +117,243 @@ public class SorryController {
         ImageView pieceClicked = (ImageView) event.getSource();
         String id = pieceClicked.getId();
         String currentTurn = turnLabel.getText();
+        int row = GridPane.getRowIndex(pieceClicked);
+        int col = GridPane.getColumnIndex(pieceClicked);
         if (currentTurn.equals(labelTurn[counter]) && id.startsWith(idTurn[counter])) {
             if (card == 1){
-                GridPane.setColumnIndex(pieceClicked, 4);
-                GridPane.setRowIndex(pieceClicked, 0);
+                if (row == 1 && col == 4){ //blue
+                    GridPane.setColumnIndex(pieceClicked, col);
+                    GridPane.setRowIndex(pieceClicked, 0);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    GridPane.setColumnIndex(pieceClicked, col + 1);
+                    GridPane.setRowIndex(pieceClicked, row);
+                }
+                if (row == 11 && col == 1){ //red
+                    GridPane.setColumnIndex(pieceClicked, 0);
+                    GridPane.setRowIndex(pieceClicked, row);
+                }
+                if (row == 14 && col == 11){ //green
+                    GridPane.setColumnIndex(pieceClicked, col);
+                    GridPane.setRowIndex(pieceClicked, row + 1);
+                }
+                if (row == 0 && col != 15){
+                    GridPane.setColumnIndex(pieceClicked, col + 1);
+                }
+                if (row == 15 && col != 0){
+                    GridPane.setColumnIndex(pieceClicked, col - 1);
+                }
+                if (col == 0 && row != 0){
+                    GridPane.setRowIndex(pieceClicked, row - 1);
+                }
+                if (col == 15 && row != 15){
+                    GridPane.setRowIndex(pieceClicked, row + 1);
+                }
 
             }
             if (card == 2){
-                GridPane.setColumnIndex(pieceClicked, 5);
-                GridPane.setRowIndex(pieceClicked, 0);
+                if (row == 1 && col == 4){ //blue
+                    GridPane.setColumnIndex(pieceClicked, 5);
+                    GridPane.setRowIndex(pieceClicked, 0);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    GridPane.setColumnIndex(pieceClicked, 15);
+                    GridPane.setRowIndex(pieceClicked, 5);
+                }
+                if (row == 11 && col == 1){ //red
+                    GridPane.setColumnIndex(pieceClicked, 0);
+                    GridPane.setRowIndex(pieceClicked, 10);
+                }
+                if (row == 14 && col == 11){ //green
+                    GridPane.setColumnIndex(pieceClicked, 10);
+                    GridPane.setRowIndex(pieceClicked, 15);
+                }
 
             }
             if (card == 3){
-                GridPane.setColumnIndex(pieceClicked, 6);
-                GridPane.setRowIndex(pieceClicked, 0);
+                if (row == 1 && col == 4){ //blue
+                    GridPane.setColumnIndex(pieceClicked,6);
+                    GridPane.setRowIndex(pieceClicked, 0);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    GridPane.setColumnIndex(pieceClicked, 15);
+                    GridPane.setRowIndex(pieceClicked, 6);
+                }
+                if (row == 11 && col == 1){ //red
+                    GridPane.setColumnIndex(pieceClicked, 0);
+                    GridPane.setRowIndex(pieceClicked, 9);
+                }
+                if (row == 14 && col == 11){ //green
+                    GridPane.setColumnIndex(pieceClicked, 9);
+                    GridPane.setRowIndex(pieceClicked, 15);
+                }
 
             }
             if (card == 4){
-                GridPane.setColumnIndex(pieceClicked, 1);
-                GridPane.setRowIndex(pieceClicked, 0);
+                if (row == 1 && col == 4){ //blue
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 11 && col == 1){ //red
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 14 && col == 11){ //green
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
 
             }
             if (card == 5){
-                GridPane.setColumnIndex(pieceClicked, 8);
-                GridPane.setRowIndex(pieceClicked,0);
+                if (row == 1 && col == 4){ //blue
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 11 && col == 1){ //red
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 14 && col == 11){ //green
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
 
             }
             if (card == 6){
-                GridPane.setColumnIndex(pieceClicked,2);
-                GridPane.setRowIndex(pieceClicked,0);
+                if (row == 1 && col == 4){ //blue
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 11 && col == 1){ //red
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 14 && col == 11){ //green
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
 
             }
             //if (card == 7){
 
             //}
             if (card == 8){
-                GridPane.setColumnIndex(pieceClicked,11);
-                GridPane.setRowIndex(pieceClicked,0);
+                if (row == 1 && col == 4){ //blue
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 11 && col == 1){ //red
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 14 && col == 11){ //green
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
 
             }
             if (card == 9){
-                GridPane.setColumnIndex(pieceClicked,0);
-                GridPane.setRowIndex(pieceClicked,0);
+                if (row == 1 && col == 4){ //blue
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 11 && col == 1){ //red
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 14 && col == 11){ //green
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
 
             }
             if (card == 10){
-                GridPane.setColumnIndex(pieceClicked,13);
-                GridPane.setRowIndex(pieceClicked,0);
+                if (row == 1 && col == 4){ //blue
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 11 && col == 1){ //red
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 14 && col == 11){ //green
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
 
             }
             if (card == 11){
-                GridPane.setColumnIndex(pieceClicked,0);
-                GridPane.setRowIndex(pieceClicked,5);
+                if (row == 1 && col == 4){ //blue
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 11 && col == 1){ //red
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 14 && col == 11){ //green
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
 
             }
             if (card == 12){
-                GridPane.setColumnIndex(pieceClicked,15);
-                GridPane.setRowIndex(pieceClicked,0);
+                if (row == 1 && col == 4){ //blue
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 4 && col == 14){ //yellow
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 11 && col == 1){ //red
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
+                if (row == 14 && col == 11){ //green
+                    instructionsLabel.setText("In start and only move with 1,2 or 3 Skip turn");
+                    turnLabel.setText(labelTurn[counter]);
+                }
             }
             //if (card == 13){
 
-            //
+            //}
             canDraw = true;
             counter = (counter + 1) % 4;
             turnLabel.setText(labelTurn[counter]);
+            cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/back.png"))));
         }
+    }
+
+    public void checkWin(){
     }
 
     public void initialize() {
