@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import java.util.Arrays;
 
 import static javafx.scene.layout.GridPane.setColumnIndex;
 
@@ -76,9 +77,9 @@ public class SorryController {
 
     private int card;
 
-    private String[] labelTurn = {"Blue Turn", "Green Turn", "Red Turn", "Yellow Turn"};
-
-    private String[] idTurn = {"blue", "green", "red", "yellow"};
+    //Lists to iterate over whose turn it is
+    private final String[] labelTurn = {"Blue Turn", "Green Turn", "Red Turn", "Yellow Turn"};
+    private final String[] idTurn = {"blue", "green", "red", "yellow"};
 
     //The list below are the Row, Column coordinates of the start positions for each color, in the order above
     private final int[] pawnStartRow = {1, 14, 11, 4 };
@@ -87,11 +88,15 @@ public class SorryController {
     The list below are the Row, Column coordinates of each color, in the order above, AFTER moved from start position (when it begins counting)
     These are the same coordinates for when a one initially moves a pawn from start
      */
-    private final int[]pawnInitialRow = {0, 15, 11, 4};
+    private final int[] pawnInitialRow = {0, 15, 11, 4};
     private final int[] pawnInitialColumn = {4, 11, 0, 15};
 
     //IMPORTANT NOTE: Since the position index orders line up with the turn orders, we can simply use the same counter to locate the position within list.
 
+    private final int[] starterMovingCards = {1,2,3};
+    private final int[] backwardMovingCards = {4, 6, 9, 11};
+
+    //Counter variable to tell iterate through list and determine the whose turn it is.
     private int counter = 0;
 
     @FXML
@@ -123,128 +128,41 @@ public class SorryController {
         }
     }
 
-
     @FXML
     void onPieceClick(MouseEvent event) {
+        //Gets id of the piece clicked
         ImageView pieceClicked = (ImageView) event.getSource();
         String id = pieceClicked.getId();
         String currentTurn = turnLabel.getText();
         int row = GridPane.getRowIndex(pieceClicked);
         int col = GridPane.getColumnIndex(pieceClicked);
+        //Determines whose turn it is (if the correct piece is being clicked)
         if (currentTurn.equals(labelTurn[counter]) && id.startsWith(idTurn[counter])) {
-            if (card == 1) {
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+            //Moves the correctly colored piece to the correct space determined by the card the user pulled
+            if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                if (card == 1 || card == 2 || card == 3) {
                     GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
                     GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
                 } else {
-                    int[] newPosition = pieceMoverForward(card, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
+                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
+                    turnLabel.setText(labelTurn[counter]);
                 }
-            }
-            if (card == 2) {
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
-                    GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
+            } else {
+                int[] newPosition;
+                if (card == 4 || card == 6 || card == 9 || card == 11) {
+                    int newCard = switch(card){
+                        case 4 -> 4;
+                        case 6 -> 3;
+                        case 9 -> 5;
+                        case 11 -> 10;
+                        default -> 1;
+                    };
+                    newPosition = pieceMoverBackward(newCard, row, col);
                 } else {
-                    int[] newPosition = pieceMoverForward(card, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
+                    newPosition = pieceMoverForward(card, row, col);
                 }
-            }
-            if (card == 3){
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
-                    GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
-                }else {
-                    int[] newPosition = pieceMoverForward(card, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
-                }
-            }
-            if (card == 4) {
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
-                    turnLabel.setText(labelTurn[counter]);
-                }else {
-                    int[] newPosition = pieceMoverBackward(card, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
-                }
-            }
-            if (card == 5){
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
-                    turnLabel.setText(labelTurn[counter]);
-                }else {
-                    int[] newPosition = pieceMoverForward(card, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
-                }
-
-            }
-            if (card == 6){
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
-                    turnLabel.setText(labelTurn[counter]);
-                }else {
-                    int[] newPosition = pieceMoverBackward(card - 3, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
-                }
-            }
-            //if (card == 7){
-
-            //}
-            if (card == 8){
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
-                    turnLabel.setText(labelTurn[counter]);
-                }else {
-                    int[] newPosition = pieceMoverForward(card, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
-                }
-            }
-            if (card == 9){
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
-                    turnLabel.setText(labelTurn[counter]);
-                }else {
-                    int[] newPosition = pieceMoverBackward(card - 4, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
-                }
-            }
-            if (card == 10){
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
-                    turnLabel.setText(labelTurn[counter]);
-                }else {
-                    int[] newPosition = pieceMoverForward(card, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
-                }
-            }
-            if (card == 11){
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
-                    turnLabel.setText(labelTurn[counter]);
-                }else {
-                    int[] newPosition = pieceMoverBackward(card - 1, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
-                }
-            }
-            if (card == 12){
-                if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
-                    instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
-                    turnLabel.setText(labelTurn[counter]);
-                }else {
-                    int[] newPosition = pieceMoverForward(card, row, col);
-                    GridPane.setRowIndex(pieceClicked, newPosition[0]);
-                    GridPane.setColumnIndex(pieceClicked, newPosition[1]);
-                }
+                GridPane.setRowIndex(pieceClicked, newPosition[0]);
+                GridPane.setColumnIndex(pieceClicked, newPosition[1]);
             }
             //if (card == 13){
             //4; 6 -> 3; 9 -> 5; 11 -> 10
@@ -258,6 +176,7 @@ public class SorryController {
 
     public void checkWin(){
     }
+
     public int[] pieceMoverForward(int card, int row, int col) {
         if (row == 0) {
             for (int i = 0; i < card; i++) {
