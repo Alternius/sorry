@@ -1,7 +1,9 @@
 package csc331.sorry;
 
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -115,7 +117,7 @@ public class SorryController {
                 case 4 -> "Click a pawn to move back four spaces";
                 case 5 -> "Click a pawn to move forward five spaces";
                 case 6 -> "Click a pawn to move back three space";
-                case 7 -> "Click a pawn to move 1-7 spaces forward";
+                case 7 -> "Click a pawn to move forward seven spaces";
                 case 8 -> "Click a pawn to move eight spaces forward";
                 case 9 -> "Click a pawn to move five spaces back";
                 case 10 -> "Click a pawn to move ten spaces forward";
@@ -161,6 +163,29 @@ public class SorryController {
                 } else {
                     newPosition = pieceMoverForward(card, row, col, counter, pieceClicked);
                 }
+
+                // Check if piece is in the new space for bump back to home
+                ImageView node = getPieceInBoard(newPosition[0], newPosition[1]);
+                if (node != null) {
+                    if (node.getId().startsWith("blue")) {
+                        GridPane.setRowIndex(node, 1);
+                        GridPane.setColumnIndex(node, 4);
+                        System.out.println("Bumped blue piece back to home");
+                    } else if (node.getId().startsWith("green")) {
+                        GridPane.setRowIndex(node, 14);
+                        GridPane.setColumnIndex(node, 11);
+                        System.out.println("Bumped green piece back to home");
+                    } else if (node.getId().startsWith("yellow")) {
+                        GridPane.setRowIndex(node, 4);
+                        GridPane.setColumnIndex(node, 14);
+                        System.out.println("Bumped yellow piece back to home");
+                    } else if (node.getId().startsWith("red")) {
+                        GridPane.setRowIndex(node, 11);
+                        GridPane.setColumnIndex(node, 1);
+                        System.out.println("Bumped red piece back to home");
+                    }
+                }
+
                 GridPane.setRowIndex(pieceClicked, newPosition[0]);
                 GridPane.setColumnIndex(pieceClicked, newPosition[1]);
             }
@@ -170,6 +195,7 @@ public class SorryController {
             counter = (counter + 1) % 4;
             turnLabel.setText(labelTurn[counter]);
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/back.png"))));
+            instructionsLabel.setText("Draw a card");
         }
     }
 
@@ -402,14 +428,22 @@ public class SorryController {
             return new int[]{row, col};
         }
 
+    public ImageView getPieceInBoard(int row, int col) {
+        ObservableList<Node> children = gridPane.getChildren();
+        for (Node node : children) {
+            if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+                if (node instanceof ImageView) {
+                    return (ImageView) node;
+                }
+            }
+        }
+        return null;
+    }
+
     public void initialize() {
         gridPane.setBackground(new Background(
                 new BackgroundImage(new Image(String.valueOf(getClass().getResource("Board.png"))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
         )));
-
-
-
     }
-
 }
