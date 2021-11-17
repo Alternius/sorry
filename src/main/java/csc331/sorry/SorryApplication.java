@@ -11,7 +11,6 @@ public class SorryApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SorryApplication.class.getResource("SorryBoard.fxml"));
-        //SorryController controller = fxmlLoader.getController();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Sorry!");
         stage.setScene(scene);

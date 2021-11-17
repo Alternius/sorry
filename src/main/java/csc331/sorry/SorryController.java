@@ -123,7 +123,9 @@ public class SorryController {
     public int yellowCounter = 0;
 
 
-
+    /**
+     * Event handler for when the deck of cards is clicked
+     */
     @FXML
     void onCardClicked(MouseEvent event) {
         card = (int) (Math.random() * 12 + 1);
@@ -153,6 +155,9 @@ public class SorryController {
         }
     }
 
+    /**
+     * Event handler for when a piece is clicked
+     */
     @FXML
     void onPieceClick(MouseEvent event) {
         //Gets id of the piece clicked
@@ -168,6 +173,7 @@ public class SorryController {
             if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
                 //Moves a piece from start if a 1,2, or 3 card is pulled
                 if (card == 1 || card == 2 || card == 3) {
+                    bumpIfOccupied(pawnInitialRow[counter], pawnInitialColumn[counter]);
                     GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
                     GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
                 } else {
@@ -194,26 +200,7 @@ public class SorryController {
                 }
 
                 // Check if piece is in the new space for bump back to home
-                ImageView node = getPieceInBoard(newPosition[0], newPosition[1]);
-                if (node != null) {
-                    if (node.getId().startsWith("blue")) {
-                        GridPane.setRowIndex(node, 1);
-                        GridPane.setColumnIndex(node, 4);
-                        System.out.println("Bumped blue piece back to home");
-                    } else if (node.getId().startsWith("green")) {
-                        GridPane.setRowIndex(node, 14);
-                        GridPane.setColumnIndex(node, 11);
-                        System.out.println("Bumped green piece back to home");
-                    } else if (node.getId().startsWith("yellow")) {
-                        GridPane.setRowIndex(node, 4);
-                        GridPane.setColumnIndex(node, 14);
-                        System.out.println("Bumped yellow piece back to home");
-                    } else if (node.getId().startsWith("red")) {
-                        GridPane.setRowIndex(node, 11);
-                        GridPane.setColumnIndex(node, 1);
-                        System.out.println("Bumped red piece back to home");
-                    }
-                }
+                bumpIfOccupied(newPosition[0], newPosition[1]);
                 //Sets new position of the pawn
                 GridPane.setRowIndex(pieceClicked, newPosition[0]);
                 GridPane.setColumnIndex(pieceClicked, newPosition[1]);
@@ -226,7 +213,15 @@ public class SorryController {
             checkWin();
         }
     }
-    //This method allows the pieces to move forward
+
+    /**
+     * Allows pieces to move forward
+     * @param card value of card drawn
+     * @param row row number
+     * @param col column number
+     * @param pieceClicked piece that was selected to move
+     * @return int[] with row (index 0) and column (index 1) of new position
+     */
     public int[] pieceMoverForward(int card, int row, int col, int counter, ImageView pieceClicked) {
         //Initializes temporary position variable to contain new row and column pair
         int[] position;
@@ -355,7 +350,14 @@ public class SorryController {
             return new int[]{position[0], position[1]};
         }
     }
-    //Functionality to move pieces backwards (counter - clockwise)
+
+    /**
+     * Functionality to move pieces backwards (counter-clockwise)
+     * @param card value of card drawn
+     * @param row row number
+     * @param col column number
+     * @return int[] with row (index 0) and column (index 1) of new position
+     */
     public int[] pieceMoverBackward(int card, int row, int col) {
         int[] position;
         //Moves a piece around the leftmost corner
@@ -404,7 +406,16 @@ public class SorryController {
         }
         return new int[]{row, col};
     }
-    //Move pieces into and within home
+
+    /**
+     * Move pieces into and within home
+     * @param counter main turn-tracking counter
+     * @param card value of card drawn
+     * @param row row number
+     * @param col column number
+     * @param pieceClicked piece that was selected to move
+     * @return int[] with row (index 0) and column (index 1) of new position
+     */
     public int[] pieceMoverToHome(int counter, int card, int row, int col, ImageView pieceClicked) {
         //Checks for blue piece
         if (counter == 0) { // blue
@@ -520,15 +531,21 @@ public class SorryController {
             }
         }
         //Returns new row and column coordinate pair
-            return new int[]{row, col};
-        }
+        return new int[]{row, col};
+    }
 
+    /**
+     * Returns the ImageView node at the given row and column in the GridPane
+     * @param row row number
+     * @param col column number
+     * @return ImageView node of piece at row or col, null if empty
+     */
     public ImageView getPieceInBoard(int row, int col) {
         // Check if the given row and column is a home spot
         if (row == 6 && col == 2 ||
-            row == 2 && col == 9 ||
-            row == 13 && col == 6 ||
-            row == 9 && col == 13)
+                row == 2 && col == 9 ||
+                row == 13 && col == 6 ||
+                row == 9 && col == 13)
             return null;
 
         ObservableList<Node> children = gridPane.getChildren();
@@ -541,7 +558,42 @@ public class SorryController {
         }
         return null;
     }
-    // check for a win
+
+    /**
+     * Bumps a piece back to its start if it exists at the given row and column
+     * @param row row number
+     * @param col column number
+     */
+    public void bumpIfOccupied(int row, int col) {
+        // Fetch node at given row and column number in GridPane
+        ImageView node = getPieceInBoard(row, col);
+        // Check if the node exists
+        if (node != null) {
+            // Determine the color of the piece at the given row and column
+            if (node.getId().startsWith("blue")) {
+                // Move piece back to pre-defined start coordinates (varies based on piece color)
+                GridPane.setRowIndex(node, 1);
+                GridPane.setColumnIndex(node, 4);
+                System.out.println("Bumped blue piece back to home");
+            } else if (node.getId().startsWith("green")) {
+                GridPane.setRowIndex(node, 14);
+                GridPane.setColumnIndex(node, 11);
+                System.out.println("Bumped green piece back to home");
+            } else if (node.getId().startsWith("yellow")) {
+                GridPane.setRowIndex(node, 4);
+                GridPane.setColumnIndex(node, 14);
+                System.out.println("Bumped yellow piece back to home");
+            } else if (node.getId().startsWith("red")) {
+                GridPane.setRowIndex(node, 11);
+                GridPane.setColumnIndex(node, 1);
+                System.out.println("Bumped red piece back to home");
+            }
+        }
+    }
+
+    /**
+     * Checks for a win
+     */
     public void checkWin(){
         //when counter for amount of pieces hits 4 then that color wins
         if (blueCounter == 4){
@@ -581,11 +633,14 @@ public class SorryController {
         }
     }
 
+    /**
+     * Runs on initialization of the controller
+     */
     public void initialize() {
         // sets the background of the board
         gridPane.setBackground(new Background(
                 new BackgroundImage(new Image(String.valueOf(getClass().getResource("Board.png"))),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
-        )));
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
+                )));
     }
 }
