@@ -125,7 +125,7 @@ public class SorryController {
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/" +
                     card + ".png"))));
             drawLabel.setText("");
-
+            // changes the instruction label to whichever card is drawn
             String labelText = switch (card) {
                 case 1 -> "Click a pawn to move forward one space.";
                 case 2 -> "Click a pawn to move forward two spaces.";
@@ -151,6 +151,7 @@ public class SorryController {
         ImageView pieceClicked = (ImageView) event.getSource();
         String id = pieceClicked.getId();
         String currentTurn = turnLabel.getText();
+        //get row and column of piece clicked
         int row = GridPane.getRowIndex(pieceClicked);
         int col = GridPane.getColumnIndex(pieceClicked);
         //Determines whose turn it is (if the correct piece is being clicked)
@@ -466,15 +467,18 @@ public class SorryController {
         }
         return null;
     }
-
+    // check for a win
     public void checkWin(){
+        //when counter for amount of pieces hits 4 then that color wins
         if (blueCounter == 4){
+            // set text to color that wins
             turnLabel.setText("Blue Wins");
+            //when a color wins creates an alert with the winner
             Alert win = new Alert(Alert.AlertType.CONFIRMATION);
             win.setTitle("Blue Wins");
             win.setContentText("Blue Wins");
             win.showAndWait();
-            System.exit(0);
+            System.exit(0); // exits the program
         }
         if (greenCounter == 4){
             turnLabel.setText("Green Wins");
@@ -504,6 +508,7 @@ public class SorryController {
     }
 
     public void initialize() {
+        // sets the background of the board
         gridPane.setBackground(new Background(
                 new BackgroundImage(new Image(String.valueOf(getClass().getResource("Board.png"))),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
