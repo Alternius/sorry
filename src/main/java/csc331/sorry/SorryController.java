@@ -75,6 +75,9 @@ public class SorryController {
     @FXML
     private Label instructionsLabel;
 
+    @FXML
+    private  Label drawLabel;
+
     private boolean canDraw = true; // Temporary - set to true on initialization but false once a card is drawn
 
     private int card;
@@ -101,14 +104,17 @@ public class SorryController {
     //Counter variable to tell iterate through list and determine the whose turn it is.
     private int counter = 0;
 
+
+
     @FXML
     void onCardClicked(MouseEvent event) {
-        card = (int) (Math.random() * 13 + 1);
+        card = (int) (Math.random() * 12 + 1);
         // Pick random card from 1 to 13; 1-12 are numbers, 13 is the Sorry card
         if (canDraw) {
             canDraw = false;
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/" +
                     (card == 13 ? "Sorry" : card) + ".png"))));
+            drawLabel.setText("");
 
             String labelText = switch (card) {
                 case 1 -> "Click a pawn to move forward one space.";
@@ -123,7 +129,6 @@ public class SorryController {
                 case 10 -> "Click a pawn to move ten spaces forward";
                 case 11 -> "Click a pawn to move ten spaces backwards";
                 case 12 -> "Click a pawn to move twelve spaces forward";
-                case 13 -> "Click pawn from start to opponent pawn space";
                 default -> "";
             };
             instructionsLabel.setText(labelText);
@@ -148,6 +153,7 @@ public class SorryController {
                 } else {
                     instructionsLabel.setText("Can only move pawn from start with 1,2 or 3; turn skipped");
                     turnLabel.setText(labelTurn[counter]);
+                    drawLabel.setText("Draw a card");
                 }
             } else {
                 int[] newPosition;
@@ -189,18 +195,13 @@ public class SorryController {
                 GridPane.setRowIndex(pieceClicked, newPosition[0]);
                 GridPane.setColumnIndex(pieceClicked, newPosition[1]);
             }
-            //if (card == 13){
-            //}
             canDraw = true;
             counter = (counter + 1) % 4;
             turnLabel.setText(labelTurn[counter]);
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/back.png"))));
-            instructionsLabel.setText("Draw a card");
         }
     }
 
-    public void checkWin(){
-    }
 
     public int[] pieceMoverForward(int card, int row, int col, int counter, ImageView pieceClicked) {
         int[] position;
@@ -445,6 +446,10 @@ public class SorryController {
             }
         }
         return null;
+    }
+
+    public void checkWin(){
+        
     }
 
     public void initialize() {

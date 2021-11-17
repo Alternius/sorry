@@ -143,7 +143,8 @@
                   <Font size="48.0" />
                </font>
             </Label>
-            <Label fx:id="instructionsLabel" alignment="CENTER" prefHeight="27.0" prefWidth="375.0" text="Draw a card" />
+            <Label fx:id="instructionsLabel" alignment="CENTER" prefHeight="27.0" prefWidth="375.0" text="Take Turn" />
+            <Label fx:id="drawLabel" alignment="CENTER" prefHeight="17.0" prefWidth="371.0" text="Draw a card" />
             <ImageView fx:id="cardImage" fitHeight="300.0" fitWidth="400.0" onMouseClicked="#onCardClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@cards/Back.png" />
