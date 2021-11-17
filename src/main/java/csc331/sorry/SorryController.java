@@ -116,6 +116,7 @@ public class SorryController {
     //Counter variable to tell iterate through list and determine the whose turn it is.
     private int counter = 0;
 
+    //Counts the number of pieces at Home Space
     public int blueCounter = 0;
     public int redCounter = 0;
     public int greenCounter = 0;
@@ -165,6 +166,7 @@ public class SorryController {
         if (currentTurn.equals(labelTurn[counter]) && id.startsWith(idTurn[counter])) {
             //Moves the correctly colored piece to the correct space determined by the card the user pulled
             if (row == pawnStartRow[counter] && col == pawnStartColumn[counter]) {
+                //Moves a piece from start if a 1,2, or 3 card is pulled
                 if (card == 1 || card == 2 || card == 3) {
                     GridPane.setRowIndex(pieceClicked, pawnInitialRow[counter]);
                     GridPane.setColumnIndex(pieceClicked, pawnInitialColumn[counter]);
@@ -174,6 +176,7 @@ public class SorryController {
                     drawLabel.setText("Draw a card");
                 }
             } else {
+                //Sets the number of backspaces to be made according to the card pulled
                 int[] newPosition;
                 if (card == 4 || card == 6 || card == 9 || card == 11) {
                     int newCard = switch(card){
@@ -183,8 +186,10 @@ public class SorryController {
                         case 11 -> 10;
                         default -> 1;
                     };
+                    //Move pieces backwards
                     newPosition = pieceMoverBackward(newCard, row, col);
                 } else {
+                    //Move pieces forwards
                     newPosition = pieceMoverForward(card, row, col, counter, pieceClicked);
                 }
 
@@ -209,37 +214,44 @@ public class SorryController {
                         System.out.println("Bumped red piece back to home");
                     }
                 }
-
+                //Sets new position of the pawn
                 GridPane.setRowIndex(pieceClicked, newPosition[0]);
                 GridPane.setColumnIndex(pieceClicked, newPosition[1]);
             }
             canDraw = true;
+            //Sets the next color's turn
             counter = (counter + 1) % 4;
             turnLabel.setText(labelTurn[counter]);
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/back.png"))));
             checkWin();
         }
     }
-
-
+    //This method allows the pieces to move forward
     public int[] pieceMoverForward(int card, int row, int col, int counter, ImageView pieceClicked) {
+        //Initializes temporary position variable to contain new row and column pair
         int[] position;
+        //Mover for when pieces are on top row
         if (row == 0) {
             for (int i = 0; i < card; i++) {
+                //Allows blue to enter its safety zone
                 if (counter == 0){
                     if (col == 2) {
                         System.out.println("Blue home");
+                        //Moves piece throughout safety zone
                         position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
                         return new int[]{position[0], position[1]};
                     }
                 }
+                //Allows yellow to enter safety zone when rounding the corner to rightmost column
                 if (counter == 3){
                     if (row == 2) {
+                        //Moves piece throughout safety zone
                         System.out.println("yellow home in corner");
                         position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
                         return new int[]{position[0], position[1]};
                     }
                 }
+                //Continues moving the piece clockwise
                 if (col == 15) {
                     row = row + 1;
                 } else {
@@ -248,22 +260,28 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
+        //Move pieces on rightmost column
         else if (col == 15) {
             for (int i = 0; i < card; i++) {
+                //Allows yellow to enter safety zone
                 if (counter == 3){
                     if (row == 2) {
                         System.out.println("yellow home");
+                        //Moves Yellow throughout safety zone
                         position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
                         return new int[]{position[0], position[1]};
                     }
                 }
+                //Allows Green to enter safety zone when rounding corner
                 if (counter == 1) {
                     if (col == 13) {
+                        //Moves Green throughout safety zone
                         System.out.println("green home in corner");
                         position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
                         return new int[]{position[0], position[1]};
                     }
                 }
+                //Continues moving the piece clockwise
                 if (row == 15) {
                     col = col - 1;
                 } else {
@@ -272,22 +290,28 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
+        //Move pieces on bottom row
         else if (row == 15) {
             for (int i = 0; i < card; i++) {
+                //Allows Green to enter safety zone
                 if (counter == 1) {
                     if (col == 13) {
                         System.out.println("green home");
+                        //Moves Green throughout Safety zone
                         position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
                         return new int[]{position[0], position[1]};
                     }
                 }
+                //Allows Red to enter safety zone when rounding the corner
                 if (counter == 2){
                     if (row == 13) {
                         System.out.println("red home in corner");
+                        //Moves red throughout safety zone
                         position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
                         return new int[]{position[0], position[1]};
                     }
                 }
+                //Continues moving the piece clockwise
                 if (col == 0) {
                     row = row - 1;
                 } else {
@@ -296,22 +320,28 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
+        //Moves pieces on leftmost column
         else if (col == 0) {
             for (int i = 0; i < card; i++) {
+                //Allows Red to enter safety zone
                 if (counter == 2){
                     if (row == 13) {
                         System.out.println("red home");
+                        //Moves Red throughout Safety Zone
                         position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
                         return new int[]{position[0], position[1]};
                     }
                 }
+                //Allows Blue to enter safety zone when rounding the corner
                 if (counter == 0){
                     if (col == 2) {
                         System.out.println("blue home in corner");
+                        //Moves Blue throughout home
                         position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
                         return new int[]{position[0], position[1]};
                     }
                 }
+                //Continues moving the piece clockwise
                 if (row == 0) {
                     col = col + 1;
                 } else {
@@ -320,12 +350,15 @@ public class SorryController {
             }
             return new int[]{row, col};
         }else{
+            //Allow pieces already in the safety zone to move
             position = pieceMoverToHome(counter, card, row, col, pieceClicked);
             return new int[]{position[0], position[1]};
         }
     }
+    //Functionality to move pieces backwards (counter - clockwise)
     public int[] pieceMoverBackward(int card, int row, int col) {
         int[] position;
+        //Moves a piece around the leftmost corner
         if (row == 0) {
             for (int i = 0; i < card; i++) {
                 if (col == 0) {
@@ -336,6 +369,7 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
+        //Moves a piece around the bottom left corner
         if (col == 0) {
             for (int i = 0; i < card; i++) {
                 if (row == 15) {
@@ -346,6 +380,7 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
+        //Moves piece around bottom right corner
         if (row == 15) {
             for (int i = 0; i < card; i++) {
                 if (col == 15) {
@@ -356,6 +391,7 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
+        //Moves piece around top right corner
         if (col == 15) {
             for (int i = 0; i < card; i++) {
                 if (row == 0) {
@@ -366,23 +402,31 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
-        //Should probably add debug for invalid move
         return new int[]{row, col};
     }
+    //Move pieces into and within home
     public int[] pieceMoverToHome(int counter, int card, int row, int col, ImageView pieceClicked) {
+        //Checks for blue piece
         if (counter == 0) { // blue
+            //Sets piece in home
             if (row + card == 6) {
                 row = 6;
+                //Makes piece unmovable and increments home counter
                 pieceClicked.setDisable(true);
                 blueCounter += 1;
             } else {
+                //Moves piece to correct location
                 for (int p = 0; p < card; p++) {
                     row = row + 1;
+                    //If an overflow, restart at the first space of safety zone
                     if (row == 6) {
+                        //Checks if piece lands on home after overflow
                         if (card - p == 1) {
+                            //Makes piece unmovable and increments home counter
                             pieceClicked.setDisable(true);
                             blueCounter += 1;
                         } else {
+                            //Moves piece to first space in safety zone
                             row = 1;
                             p++;
                         }
@@ -391,19 +435,27 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
+        //Checks for green piece
         if (counter == 1) { // green
+            //Sets piece in home
             if (row - card == 9) {
                 row = 9;
+                //Makes piece unmovable and increments home counter
                 pieceClicked.setDisable(true);
                 greenCounter += 1;
             } else {
+                //Moves piece to correct location
                 for (int p = 0; p < card; p++) {
                     row = row - 1;
+                    //If an overflow, restart at the first space of safety zone
                     if (row == 9) {
+                        //Checks if piece lands on home after overflow
                         if (card - p == 1) {
+                            //Makes piece unmovable and increments home counter
                             pieceClicked.setDisable(true);
                             greenCounter += 1;
                         } else {
+                            //Moves piece to first space in safety zone
                             row = 14;
                             p++;
                         }
@@ -413,18 +465,25 @@ public class SorryController {
             return new int[]{row, col};
         }
         if (counter == 2) { // red
+            //sets piece in home
             if (col + card == 6) {
                 col = 6;
+                //Makes piece unmovable and increments home counter
                 pieceClicked.setDisable(true);
                 redCounter += 1;
             } else {
+                //Moves piece to correct location
                 for (int p = 0; p < card; p++) {
                     col = col + 1;
+                    //If an overflow, restart at the first space of safety zone
                     if (col == 6) {
+                        //Checks if piece lands on home after overflow
                         if (card - p == 1) {
+                            //Makes piece unmovable and increments home counter
                             pieceClicked.setDisable(true);
                             redCounter += 1;
                         } else {
+                            //Moves piece to first space in safety zone
                             col = 1;
                             p++;
                         }
@@ -434,18 +493,25 @@ public class SorryController {
             return new int[]{row, col};
         }
         if (counter == 3) { //yellow
+            //sets piece in home
             if (col - card == 9) {
                 col = 9;
+                //Makes piece unmovable and increments home counter
                 pieceClicked.setDisable(true);
                 yellowCounter += 1;
             } else {
+                //Moves piece to correct location
                 for (int p = 0; p < card; p++) {
                     col = col - 1;
+                    //If an overflow, restart at the first space of safety zone
                     if (col == 9) {
+                        //Checks if piece lands on home after overflow
                         if (card - p == 1) {
+                            //Makes piece unmovable and increments home counter
                             pieceClicked.setDisable(true);
                             yellowCounter += 1;
                         } else {
+                            //Moves piece to first space in safety zone
                             col = 14;
                             p++;
                         }
@@ -453,6 +519,7 @@ public class SorryController {
                 }
             }
         }
+        //Returns new row and column coordinate pair
             return new int[]{row, col};
         }
 
