@@ -429,6 +429,13 @@ public class SorryController {
         }
 
     public ImageView getPieceInBoard(int row, int col) {
+        // Check if the given row and column is a home spot
+        if (row == 6 && col == 2 ||
+            row == 2 && col == 9 ||
+            row == 13 && col == 6 ||
+            row == 9 && col == 13)
+            return null;
+
         ObservableList<Node> children = gridPane.getChildren();
         for (Node node : children) {
             if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
