@@ -1,15 +1,20 @@
 package csc331.sorry;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import java.lang.*;
+import java.util.Optional;
 
 import static javafx.scene.layout.GridPane.setColumnIndex;
 
@@ -103,6 +108,11 @@ public class SorryController {
 
     //Counter variable to tell iterate through list and determine the whose turn it is.
     private int counter = 0;
+
+    public int blueCounter = 0;
+    public int redCounter = 0;
+    public int greenCounter = 0;
+    public int yellowCounter = 0;
 
 
 
@@ -199,6 +209,7 @@ public class SorryController {
             counter = (counter + 1) % 4;
             turnLabel.setText(labelTurn[counter]);
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/back.png"))));
+            checkWin();
         }
     }
 
@@ -351,16 +362,18 @@ public class SorryController {
         return new int[]{row, col};
     }
     public int[] pieceMoverToHome(int counter, int card, int row, int col, ImageView pieceClicked) {
-        if (counter == 0) {
+        if (counter == 0) { // blue
             if (row + card == 6) {
                 row = 6;
                 pieceClicked.setDisable(true);
+                blueCounter += 1;
             } else {
                 for (int p = 0; p < card; p++) {
                     row = row + 1;
                     if (row == 6) {
                         if (card - p == 1) {
                             pieceClicked.setDisable(true);
+                            blueCounter += 1;
                         } else {
                             row = 1;
                             p++;
@@ -370,16 +383,18 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
-        if (counter == 1) {
+        if (counter == 1) { // green
             if (row - card == 9) {
                 row = 9;
                 pieceClicked.setDisable(true);
+                greenCounter += 1;
             } else {
                 for (int p = 0; p < card; p++) {
                     row = row - 1;
                     if (row == 9) {
                         if (card - p == 1) {
                             pieceClicked.setDisable(true);
+                            greenCounter += 1;
                         } else {
                             row = 14;
                             p++;
@@ -389,16 +404,18 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
-        if (counter == 2) {
+        if (counter == 2) { // red
             if (col + card == 6) {
                 col = 6;
                 pieceClicked.setDisable(true);
+                redCounter += 1;
             } else {
                 for (int p = 0; p < card; p++) {
                     col = col + 1;
                     if (col == 6) {
                         if (card - p == 1) {
                             pieceClicked.setDisable(true);
+                            redCounter += 1;
                         } else {
                             col = 1;
                             p++;
@@ -408,16 +425,18 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
-        if (counter == 3) {
+        if (counter == 3) { //yellow
             if (col - card == 9) {
                 col = 9;
                 pieceClicked.setDisable(true);
+                yellowCounter += 1;
             } else {
                 for (int p = 0; p < card; p++) {
                     col = col - 1;
                     if (col == 9) {
                         if (card - p == 1) {
                             pieceClicked.setDisable(true);
+                            yellowCounter += 1;
                         } else {
                             col = 14;
                             p++;
@@ -449,7 +468,39 @@ public class SorryController {
     }
 
     public void checkWin(){
-        
+        if (blueCounter == 4){
+            turnLabel.setText("Blue Wins");
+            Alert win = new Alert(Alert.AlertType.CONFIRMATION);
+            win.setTitle("Blue Wins");
+            win.setContentText("Blue Wins");
+            win.showAndWait();
+            System.exit(0);
+        }
+        if (greenCounter == 4){
+            turnLabel.setText("Green Wins");
+            Alert win = new Alert(Alert.AlertType.CONFIRMATION);
+            win.setTitle("Green Wins");
+            win.setContentText("Green Wins");
+            win.showAndWait();
+            System.exit(0);
+
+        }
+        if (redCounter == 4){
+            turnLabel.setText("Red Wins");
+            Alert win = new Alert(Alert.AlertType.CONFIRMATION);
+            win.setTitle("Red Wins");
+            win.setContentText("Red Wins");
+            win.showAndWait();
+            System.exit(0);
+        }
+        if (yellowCounter == 4){
+            turnLabel.setText("Yellow Wins");
+            Alert win = new Alert(Alert.AlertType.CONFIRMATION);
+            win.setTitle("Yellow Wins");
+            win.setContentText("Yellow Wins");
+            win.showAndWait();
+            System.exit(0);
+        }
     }
 
     public void initialize() {
