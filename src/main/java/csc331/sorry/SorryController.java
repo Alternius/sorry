@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import java.util.Arrays;
+import java.lang.*;
 
 import static javafx.scene.layout.GridPane.setColumnIndex;
 
@@ -91,10 +91,10 @@ public class SorryController {
     private final int[] pawnInitialRow = {0, 15, 11, 4};
     private final int[] pawnInitialColumn = {4, 11, 0, 15};
 
-    //IMPORTANT NOTE: Since the position index orders line up with the turn orders, we can simply use the same counter to locate the position within list.
+    private final int[] pawnHomeRow = {0, 15, 13, 2};
+    private final int[] pawnHomeColumn = {2, 13, 0, 15};
 
-    private final int[] starterMovingCards = {1,2,3};
-    private final int[] backwardMovingCards = {4, 6, 9, 11};
+    //IMPORTANT NOTE: Since the position index orders line up with the turn orders, we can simply use the same counter to locate the position within list.
 
     //Counter variable to tell iterate through list and determine the whose turn it is.
     private int counter = 0;
@@ -159,13 +159,12 @@ public class SorryController {
                     };
                     newPosition = pieceMoverBackward(newCard, row, col);
                 } else {
-                    newPosition = pieceMoverForward(card, row, col);
+                    newPosition = pieceMoverForward(card, row, col, counter, pieceClicked);
                 }
                 GridPane.setRowIndex(pieceClicked, newPosition[0]);
                 GridPane.setColumnIndex(pieceClicked, newPosition[1]);
             }
             //if (card == 13){
-            //4; 6 -> 3; 9 -> 5; 11 -> 10
             //}
             canDraw = true;
             counter = (counter + 1) % 4;
@@ -177,9 +176,24 @@ public class SorryController {
     public void checkWin(){
     }
 
-    public int[] pieceMoverForward(int card, int row, int col) {
+    public int[] pieceMoverForward(int card, int row, int col, int counter, ImageView pieceClicked) {
+        int[] position;
         if (row == 0) {
             for (int i = 0; i < card; i++) {
+                if (counter == 0){
+                    if (col == 2) {
+                        System.out.println("Blue home");
+                        position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
+                        return new int[]{position[0], position[1]};
+                    }
+                }
+                if (counter == 3){
+                    if (row == 2) {
+                        System.out.println("yellow home in corner");
+                        position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
+                        return new int[]{position[0], position[1]};
+                    }
+                }
                 if (col == 15) {
                     row = row + 1;
                 } else {
@@ -188,8 +202,22 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
-        if (col == 15) {
+        else if (col == 15) {
             for (int i = 0; i < card; i++) {
+                if (counter == 3){
+                    if (row == 2) {
+                        System.out.println("yellow home");
+                        position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
+                        return new int[]{position[0], position[1]};
+                    }
+                }
+                if (counter == 1) {
+                    if (col == 13) {
+                        System.out.println("green home in corner");
+                        position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
+                        return new int[]{position[0], position[1]};
+                    }
+                }
                 if (row == 15) {
                     col = col - 1;
                 } else {
@@ -198,8 +226,22 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
-        if (row == 15) {
+        else if (row == 15) {
             for (int i = 0; i < card; i++) {
+                if (counter == 1) {
+                    if (col == 13) {
+                        System.out.println("green home");
+                        position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
+                        return new int[]{position[0], position[1]};
+                    }
+                }
+                if (counter == 2){
+                    if (row == 13) {
+                        System.out.println("red home in corner");
+                        position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
+                        return new int[]{position[0], position[1]};
+                    }
+                }
                 if (col == 0) {
                     row = row - 1;
                 } else {
@@ -208,8 +250,22 @@ public class SorryController {
             }
             return new int[]{row, col};
         }
-        if (col == 0) {
+        else if (col == 0) {
             for (int i = 0; i < card; i++) {
+                if (counter == 2){
+                    if (row == 13) {
+                        System.out.println("red home");
+                        position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
+                        return new int[]{position[0], position[1]};
+                    }
+                }
+                if (counter == 0){
+                    if (col == 2) {
+                        System.out.println("blue home in corner");
+                        position = pieceMoverToHome(counter, card - i, row, col, pieceClicked);
+                        return new int[]{position[0], position[1]};
+                    }
+                }
                 if (row == 0) {
                     col = col + 1;
                 } else {
@@ -217,11 +273,13 @@ public class SorryController {
                 }
             }
             return new int[]{row, col};
+        }else{
+            position = pieceMoverToHome(counter, card, row, col, pieceClicked);
+            return new int[]{position[0], position[1]};
         }
-        //Should probably add debug for invalid move
-        return new int[]{row, col};
     }
     public int[] pieceMoverBackward(int card, int row, int col) {
+        int[] position;
         if (row == 0) {
             for (int i = 0; i < card; i++) {
                 if (col == 0) {
@@ -265,6 +323,85 @@ public class SorryController {
         //Should probably add debug for invalid move
         return new int[]{row, col};
     }
+    public int[] pieceMoverToHome(int counter, int card, int row, int col, ImageView pieceClicked) {
+        if (counter == 0) {
+            if (row + card == 6) {
+                row = 6;
+                pieceClicked.setDisable(true);
+            } else {
+                for (int p = 0; p < card; p++) {
+                    row = row + 1;
+                    if (row == 6) {
+                        if (card - p == 1) {
+                            pieceClicked.setDisable(true);
+                        } else {
+                            row = 1;
+                            p++;
+                        }
+                    }
+                }
+            }
+            return new int[]{row, col};
+        }
+        if (counter == 1) {
+            if (row - card == 9) {
+                row = 9;
+                pieceClicked.setDisable(true);
+            } else {
+                for (int p = 0; p < card; p++) {
+                    row = row - 1;
+                    if (row == 9) {
+                        if (card - p == 1) {
+                            pieceClicked.setDisable(true);
+                        } else {
+                            row = 14;
+                            p++;
+                        }
+                    }
+                }
+            }
+            return new int[]{row, col};
+        }
+        if (counter == 2) {
+            if (col + card == 6) {
+                col = 6;
+                pieceClicked.setDisable(true);
+            } else {
+                for (int p = 0; p < card; p++) {
+                    col = col + 1;
+                    if (col == 6) {
+                        if (card - p == 1) {
+                            pieceClicked.setDisable(true);
+                        } else {
+                            col = 1;
+                            p++;
+                        }
+                    }
+                }
+            }
+            return new int[]{row, col};
+        }
+        if (counter == 3) {
+            if (col - card == 9) {
+                col = 9;
+                pieceClicked.setDisable(true);
+            } else {
+                for (int p = 0; p < card; p++) {
+                    col = col - 1;
+                    if (col == 9) {
+                        if (card - p == 1) {
+                            pieceClicked.setDisable(true);
+                        } else {
+                            col = 14;
+                            p++;
+                        }
+                    }
+                }
+            }
+        }
+            return new int[]{row, col};
+        }
+
     public void initialize() {
         gridPane.setBackground(new Background(
                 new BackgroundImage(new Image(String.valueOf(getClass().getResource("Board.png"))),
