@@ -123,7 +123,7 @@ public class SorryController {
         if (canDraw) {
             canDraw = false;
             cardImage.setImage(new Image(String.valueOf(getClass().getResource("cards/" +
-                    (card == 13 ? "Sorry" : card) + ".png"))));
+                    card + ".png"))));
             drawLabel.setText("");
 
             String labelText = switch (card) {
