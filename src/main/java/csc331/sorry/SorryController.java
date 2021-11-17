@@ -1,3 +1,10 @@
+/**
+ * Program Purpose: Play Sorry game
+ * Names: Brian Alvarez, Lukas Becker, Steven Allen, Colin Choquette
+ * Course: CSC 331-001
+ * Date: 11/16/2021
+ */
+
 package csc331.sorry;
 
 import javafx.application.Platform;
